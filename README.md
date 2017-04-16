@@ -77,7 +77,7 @@ Lösung:
 
 #### Use Case: Löschen von Eingefügten Daten
 ```
-Challenge**: Aktuell sind nur drei Einträge erlaubt. Um dies etwas gerechter zu machen, soll die "add" 
+Challenge: Aktuell sind nur drei Einträge erlaubt. Um dies etwas gerechter zu machen, soll die "add" 
 Funktionalität gefuzzed werden
 
 Lösung:
