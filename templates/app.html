@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Project Makalu - Broken Session Handling Shop</title>
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="icon" href="/static/favicon.ico" />
+    </head>
+    <body>
+        <div class="header">
+            <div class="logo" align="left">anna group</div>
+            <a href="/">Home</a>
+            {% if session['user'] %}
+                <a href="/logout">Logout</a> (Logged in as {{ session['user'] }})
+            {% else %}
+                <a href="/login">Login</a>
+            {% endif %}
+        </div>
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

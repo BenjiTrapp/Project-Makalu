@@ -1,0 +1,29 @@
+body {
+    background-color: 	#708090;/*#293133;*/
+    color: #222222;
+}
+
+.logo {
+    float: left;
+    font-weight: bold;
+    font-size: 20px;
+    color: red;
+}
+
+a:link, a:visited {
+    color: white;
+}
+
+.header {
+   display: block;
+   text-align: right;
+   color: white;
+   background-color: black;
+   padding: 8px;
+}
+
+.content {
+    background-color: darkgrey;
+    padding: 15px;
+    margin: 15px;
+}
