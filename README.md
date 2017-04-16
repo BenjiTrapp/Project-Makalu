@@ -1,17 +1,16 @@
 # Project Makalu 
 Im Zuge des neuen Online Shops der **anna group** wird auch ein neues Session Handling benötigt. Der hier vorliegende 
-Code steht kurz vor dem produktiven Livegang. Trotz der rapiden Entwicklung machen sich erhebliche Zweifel breit ob
+Code steht kurz vor dem produktiven Livegang. Trotz der rapiden Entwicklung machen sich erhebliche Zweifel breit, ob
  nicht etwas wichtiges vergessen wurde?
 
 ### Motivation
-Moderne WebApps verfügen über eine enorme Komplexität. Um den Kunden vor mögliche Angriffe aus dem selben Netzwerk zu 
-schützen, benötigen Requests an eine WebApp eine Login-Session. Ein Request benötigt üblicherweise die Daten aus einer 
-vorherigen Response (bspw. CSRF tokens). Die empfangenen Daten in einem Teilrequest können auch einige Requests später 
+Moderne WebApps verfügen teilweise über eine enorme Komplexität. Um den Kunden vor mögliche Angriffe zu schützen, benötigen unter anderem Requestsdie an eine WebApp gestellt werden eine Login-Session. Ein Request benötigt üblicherweise die Daten aus einer 
+vorherigen Response (bspw. CSRF tokens). Die empfangenen Daten in einem Teilrequest, können auch einige Requests später noch 
 benötigt werden (bspw. während des Checkout Prozesses in einem Webshop). Dies macht den Einsatz von "unique" Namen/IDs 
-notwendig während der Erstellung eines Requests. 
+notwendig, während der Erstellung eines Requests. 
 
-**Randbemerkung**: Fuzzing im Kontext eines bswp. CSRF tokens, erzeugen eine Vielzahl von Daten innerhalb der WebApplikation.
-Dadurch kann im Falle eines Angriffs, die Performance der gesamten Applikation beeinträchtigen.
+**Randbemerkung**: Das Fuzzing bspw. im Kontext eines CSRF tokens, erzeugt eine Vielzahl von Daten sowie Aufrufe innerhalb der WebApplikation. Dadurch kann im Falle eines Angriffs, die Performance der gesamten Applikation beeinträchtigen. Die Performance selbst,
+steht in diesem Penetration Tests NICHT im Fokus, kann aber je nach gewählter Fuzzing-Methode zu einem "Problem" für den Angriff werden. 
 
 ## Problemstellung:
  Helfe der **anna group** durch einen Penetration Test die Sicherheit des Session Handlings zu prüfen. Um diesen Wunsch
