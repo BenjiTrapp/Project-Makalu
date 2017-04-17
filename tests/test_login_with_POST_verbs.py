@@ -46,6 +46,5 @@ class BasicTests(unittest.TestCase):
         # then
         self.assertEqual(response.status_code, 400)
 
-
 if __name__ == "__main__":
     unittest.main()

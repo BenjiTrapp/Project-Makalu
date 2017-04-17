@@ -46,34 +46,6 @@ class BasicTests(unittest.TestCase):
         # then
         self.assertEqual(response.status_code, 200)
 
-    def test_should_return_200_when_orderarticle_step1_page_is_called_with_get(self):
-        # when
-        response = self.app.get('/OrderArticle/1', follow_redirects = True)
-
-        # then
-        self.assertEqual(response.status_code, 200)
-
-    def test_should_return_200_when_orderarticle_step2_page_is_called_with_get(self):
-        # when
-        response = self.app.get('/OrderArticle/2', follow_redirects = True)
-
-        # then
-        self.assertEqual(response.status_code, 200)
-
-    def test_should_return_200_when_orderarticle_step3_page_is_called_with_get(self):
-        # when
-        response = self.app.get('/OrderArticle/3', follow_redirects = True)
-
-        # then
-        self.assertEqual(response.status_code, 200)
-
-    def test_should_return_200_when_orderarticle_step4_page_is_called_with_get(self):
-        # when
-        response = self.app.get('/OrderArticle/4', follow_redirects = True)
-
-        # then
-        self.assertEqual(response.status_code, 200)
-
     def test_should_return_200_when_csrf_protected_page_is_called_with_get(self):
         # when
         response = self.app.get('/CSRFProtected', follow_redirects = True)
