@@ -52,7 +52,7 @@ class BasicTests(unittest.TestCase):
                        b'            <a href="/">Home</a>\n            \n                <a href="/login">Login</a>\n'
                        b'            \n        </div>\n        <div class="content">\n            \n<h1>Login</h1>\n'
                        b'<form action="/login" method="POST">\n    Username: <input type="text" name="user"><br>\n'
-                       b'    Password: <input type="password" name="pass"><br>\n    <input type="hidden" '
+                       b'    Password: <input type="password" name="pwd"><br>\n    <input type="hidden" '
                        b'name="redirectto" value="home">\n    <input type="submit" value="Login">\n</form>\n<br>\n'
                        b'<div style="color: red;"></div><br>\n\n        </div>\n    </body>\n</html>')
 
@@ -71,7 +71,7 @@ class BasicTests(unittest.TestCase):
                        b'\n            \n                <a href="/login">Login</a>\n            \n        </div>\n'
                        b'        <div class="content">\n            \n<h1>Login</h1>\n<form action="/login" '
                        b'method="POST">\n    Username: <input type="text" name="user"><br>\n    Password: '
-                       b'<input type="password" name="pass"><br>\n    <input type="hidden" name="redirectto" '
+                       b'<input type="password" name="pwd"><br>\n    <input type="hidden" name="redirectto" '
                        b'value="home">\n    <input type="submit" value="Login">\n</form>\n<br>\n<div style="color:'
                        b' red;">You have successfully logged out.</div><br>\n\n        </div>\n    </body>\n</html>')
 

@@ -3,7 +3,7 @@
 <h1>Login</h1>
 <form action="/login" method="POST">
     Username: <input type="text" name="user"><br>
-    Password: <input type="password" name="pass"><br>
+    Password: <input type="password" name="pwd"><br>
     <input type="hidden" name="redirectto" value="{{ request.args.get('redirectto') or 'home' }}">
     <input type="submit" value="Login">
 </form>

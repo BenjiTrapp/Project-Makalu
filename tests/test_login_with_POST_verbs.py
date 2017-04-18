@@ -27,17 +27,42 @@ class BasicTests(unittest.TestCase):
 
     def test_should_return_200_when_login_page_is_called_with_post_and_valid_credentials(self):
         # when
-        response = self.app.post('/login', follow_redirects = True, data = {'user': 'hallo'})
+        response = self.app.post('/login', content_type = 'multipart/form-data', follow_redirects = True,
+                                 data = {'user': 'user', 'pwd': 'hallo', 'redirectto': 'home', 'submit': 'Login'})
 
         # then
         self.assertEqual(response.status_code, 200)
 
-    def test_should_return_400_when_login_page_is_called_with_post_and_invalid_credentials(self):
+    def test_should_login_correctly_when_called_with_post_and_valid_credentials(self):
+        #given
+        expected = str('Logged in as user')
+
         # when
-        response = self.app.post('/login', follow_redirects = True, data = {'admin': 'InvalidPassword'})
+        result = self.app.post('/login', content_type = 'multipart/form-data', follow_redirects = True,
+                                 data = {'user': 'user', 'pwd': 'hallo', 'redirectto': 'home', 'submit': 'Login'})
 
         # then
-        self.assertEqual(response.status_code, 400)
+        self.assertTrue(expected in str(result.data))
+
+    def test_should_return_200_when_login_page_is_called_with_post_and_invalid_credentials(self):
+        # when
+        result = self.app.post('/login', content_type = 'multipart/form-data', follow_redirects = True,
+                                 data = {'user': 'wrong', 'pwd': 'wrong', 'redirectto': 'home', 'submit': 'Login'})
+
+        # then
+        self.assertEqual(result.status_code, 200)
+
+    def test_should_NOT_login__when_called_with_post_and_invalid_credentials(self):
+        # given
+        expected = str('User wrong unknown!')
+
+        # when
+        result = self.app.post('/login', content_type = 'multipart/form-data', follow_redirects = True,
+                               data = {'user': 'wrong', 'pwd': 'wrong', 'redirectto': 'home', 'submit': 'Login'})
+
+        # then
+        self.assertTrue(expected in str(result.data))
+
 
     def test_should_return_400_when_login_page_is_called_with_post_and_no_credentials(self):
         # when

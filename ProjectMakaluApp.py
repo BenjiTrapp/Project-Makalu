@@ -40,7 +40,7 @@ def login():
         except KeyError:
             return render_template("login.html", message = "User " + username + " unknown!")
 
-        if password == request.form['pass']:
+        if password == request.form['pwd']:
             session['user'] = username
             __new_csrf_token()
             if 'redirectto' in request.form:
