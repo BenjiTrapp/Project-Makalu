@@ -1,4 +1,5 @@
-# Project Makalu - An unsecure Webshop with an intentional broken Session Handling
+# Project Makalu 
+## An unsecure Webshop with an intentional broken Session Handling
 Im Zuge des neuen Online Shops der **anna group** wird auch ein neues Session Handling benötigt. Der hier vorliegende 
 Code steht kurz vor dem produktiven Livegang. Trotz der rapiden Entwicklung machen sich erhebliche Zweifel breit, ob
  nicht etwas wichtiges vergessen wurde?
