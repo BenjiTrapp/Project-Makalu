@@ -42,7 +42,7 @@ def login():
 
         if password == request.form['pwd']:
             session['user'] = username
-            __new_csrf_token()
+            __create_new_csrf_token()
             if 'redirectto' in request.form:
                 return redirect(url_for(request.form['redirectto']))
         else:
@@ -63,7 +63,7 @@ def CSRFProtection():
     if request.method == 'GET':
         return render_template("CSRFForm.html")
     elif request.method == 'POST':
-        if not __csrf_validation():
+        if not __is_csrf_token_valid():
             return render_template("message.html", message = "CSRF validation failed!")
         else:
             return render_template("CSRFShow.html")
@@ -80,7 +80,7 @@ def ProbabilisticLogout():
         if random() < 0.2:
             return logout()
         else:
-            if __csrf_validation():
+            if __is_csrf_token_valid():
                 return render_template("ProbShow.html", fields = list(string.ascii_lowercase))
             else:
                 return render_template("message.html", message = "CSRF validation failed!")
@@ -103,7 +103,7 @@ def OrderArticle(step):
     if request.method == 'GET':
         return render_template("OrderArticle-Step{}.html".format(step), articles = __articles)
     elif request.method == 'POST':
-        if not __csrf_validation():
+        if not __is_csrf_token_valid():
             return render_template("message.html", message = "CSRF validation failed!")
 
         if step < ORDER_ARTICLE_WORKFLOW_STEPS:
@@ -154,17 +154,19 @@ def __is_login_session():
     return 'user' in session
 
 
-def __new_csrf_token():
-    session['csrftoken'] = "".join([choice(string.ascii_letters) for i in range(32)])
-
-
-def __csrf_validation():
+def __is_csrf_token_valid():
     try:
         __session_token = session['csrftoken']
-        __new_csrf_token()
+        __create_new_csrf_token()
         return __session_token == request.form['csrftoken']
     except:
         return False
+
+
+def __create_new_csrf_token():
+    session['csrftoken'] = "".join([choice(string.ascii_letters) for i in range(32)])
+
+
 
 if __name__ == '__main__':
     app.run(port = 8001, debug = False)
