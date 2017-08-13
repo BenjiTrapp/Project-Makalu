@@ -18,7 +18,7 @@ steht in diesem Penetrationtests NICHT im Fokus, kann aber je nach gewählter Fu
  
 ##### Installation der WebApp
 ```
-1. Install Python 3.4 + virtualenv
+1. Install Python >= Version 3.4 + virtualenv
 2. (optional) virtualenv -p python3 pyenv
 3. (optional) . pyenv/bin/activate
 4. pip3 install flask
