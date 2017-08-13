@@ -9,3 +9,4 @@ install:
     - pip install -r requirements.txt
 script:
     - python tests/runCompleteTestSuite.py
+    - python -m unittest discover
