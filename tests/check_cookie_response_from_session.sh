@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Make sure, that the application is running
 
-curl -c - 127.0.0.1:8001/login | grep vsessid
+curl -c - 127.0.0.1:4711/login | grep vsessid
 
 # The curl command shall return something like this
 #% Total    % Received % Xferd  Average Speed   Time    Time     Time  Current

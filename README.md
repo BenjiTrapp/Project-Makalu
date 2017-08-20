@@ -18,22 +18,14 @@ steht in diesem Penetrationtests NICHT im Fokus, kann aber je nach gewählter Fu
  nachzukommen muss zunächst die Applikation installiert und betriebsbereit gemacht werden. Hierbei hilft 
  sicherlich folgende Anleitung weiter:
  
-##### Installation der WebApp
+##### Installation & starten der WebApp mittels Docker
 ```
-1. Install Python >= Version 3.4 + virtualenv
-2. (optional) virtualenv -p python3 pyenv
-3. (optional) . pyenv/bin/activate
-4. pip3 install flask
-```
-
-##### Starten der WebApp
-```
-1. (optional, wenn in virtualenv) . pyenv/bin/activate
-2. python3 ProjectMaklulaApp.py
-3. Öffne die URL: http://localhost:8001 m Browser 
+1. Git repository pullen von GitHub
+2. 'compose up'
+3. Öffne im Browser: "http://localhost:4711"
 ```
 
-#####  [Credentials](https://www.heise.de/security/meldung/hallo-ist-meistgenutztes-deutsches-Passwort-auf-Platz-zehn-steht-ficken-3579567.html): user/hallo 
+#####  [Credentials](https://www.heise.de/security/meldung/hallo-ist-meistgenutztes-deutsches-Passwort-auf-Platz-zehn-steht-ficken-3579567.html): user/hallo
 
 ## Durchführung des Penetrationtests
 Für den Test existiert folgende Use Cases. Zur Durchführung des Penetrationtests kann das File 

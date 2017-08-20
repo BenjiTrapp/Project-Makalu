@@ -169,4 +169,4 @@ def __create_new_csrf_token():
 
 
 if __name__ == '__main__':
-    app.run(port = 8001, debug = False)
+    app.run(port = 4711, debug = False)

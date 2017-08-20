@@ -8,4 +8,3 @@ WORKDIR /code
 RUN pip install -r requirements.txt
 
 RUN python ProjectMakaluApp.py
-#CMD ["python", "ProjectMakaluApp.py"]

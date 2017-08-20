@@ -3,6 +3,6 @@ services:
   web:
     build: .
     ports:
-     - "8001:8001"
+     - "4711:4711"
     volumes:
      - .:/code
