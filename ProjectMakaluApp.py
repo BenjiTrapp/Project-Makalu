@@ -25,7 +25,7 @@ def home():
     return render_template("home.html")
 
 
-@app.route('/login', methods = ['POST', 'GET'])
+@app.route('/login', methods=['POST', 'GET'])
 def login():
     if __is_login_session():
         return redirect(url_for('home'))
@@ -38,7 +38,7 @@ def login():
         try:
             password = __users[username]
         except KeyError:
-            return render_template("login.html", message = "User " + username + " unknown!")
+            return render_template("login.html", message="User " + username + " unknown!")
 
         if password == request.form['pwd']:
             session['user'] = username
@@ -46,82 +46,81 @@ def login():
             if 'redirectto' in request.form:
                 return redirect(url_for(request.form['redirectto']))
         else:
-            return render_template("login.html", message = "Login failed!")
+            return render_template("login.html", message="Login failed!")
 
 
 @app.route('/logout')
 def logout():
     session.clear()
-    return render_template("login.html", message = "You have successfully logged out.")
+    return render_template("login.html", message="You have successfully logged out.")
 
 
-@app.route('/CSRFProtected', methods = ['POST', 'GET'])
+@app.route('/CSRFProtected', methods=['POST', 'GET'])
 def CSRFProtection():
     if not __is_login_session():
-        return redirect(url_for('login', redirectto = 'CSRFProtection'))
+        return redirect(url_for('login', redirectto='CSRFProtection'))
 
     if request.method == 'GET':
         return render_template("CSRFForm.html")
     elif request.method == 'POST':
         if not __is_csrf_token_valid():
-            return render_template("message.html", message = "CSRF validation failed!")
+            return render_template("message.html", message="CSRF validation failed!")
         else:
             return render_template("CSRFShow.html")
 
 
-@app.route('/ProbabilisticLogout', methods = ['POST', 'GET'])
+@app.route('/ProbabilisticLogout', methods=['POST', 'GET'])
 def ProbabilisticLogout():
     if not __is_login_session():
-        return redirect(url_for('login', redirectto = 'ProbabilisticLogout'))
+        return redirect(url_for('login', redirectto='ProbabilisticLogout'))
 
     if request.method == 'GET':
-        return render_template("ProbForm.html", fields = list(string.ascii_lowercase))
+        return render_template("ProbForm.html", fields=list(string.ascii_lowercase))
     elif request.method == 'POST':
         if random() < 0.2:
             return logout()
         else:
             if __is_csrf_token_valid():
-                return render_template("ProbShow.html", fields = list(string.ascii_lowercase))
+                return render_template("ProbShow.html", fields=list(string.ascii_lowercase))
             else:
-                return render_template("message.html", message = "CSRF validation failed!")
+                return render_template("message.html", message="CSRF validation failed!")
 
 
-@app.route('/OrderArticle/<int:step>', methods = ['POST', 'GET'])
+@app.route('/OrderArticle/<int:step>', methods=['POST', 'GET'])
 def OrderArticle(step):
     if not __is_login_session():
-        return redirect(url_for('login', redirectto = 'ProbabilisticLogout'))
+        return redirect(url_for('login', redirectto='ProbabilisticLogout'))
 
     if 'step' not in session:
         session['step'] = ORDER_ARTICLE_INITIAL_STEP
 
     if session['step'] < step:
-        return render_template("message.html", message = "Order Article request doesn't match the OrderArticle state!")
+        return render_template("message.html", message="Order Article request doesn't match the OrderArticle state!")
 
     if session['step'] != step:
         session['step'] = step
 
     if request.method == 'GET':
-        return render_template("OrderArticle-Step{}.html".format(step), articles = __articles)
+        return render_template("OrderArticle-Step{}.html".format(step), articles=__articles)
     elif request.method == 'POST':
         if not __is_csrf_token_valid():
-            return render_template("message.html", message = "CSRF validation failed!")
+            return render_template("message.html", message="CSRF validation failed!")
 
         if step < ORDER_ARTICLE_WORKFLOW_STEPS:
             for param in request.form:
                 session['wf_' + param] = request.form[param]
 
             session['step'] += 1
-            return redirect(url_for('OrderArticle', step = session['step']))
+            return redirect(url_for('OrderArticle', step=session['step']))
         else:
             session['step'] = 1
-            return render_template("message.html", message = "Thanks for your order! "
-                                                             "Your article will be delivered soon!")
+            return render_template("message.html", message="Thanks for your order! Your article will be delivered soon!")
 
 
-@app.route('/Notes', methods = ['POST', 'GET'])
+@app.route('/Notes', methods=['POST', 'GET'])
 def Notes():
     if not __is_login_session():
-        return redirect(url_for('login', redirectto = 'Notes'))
+        return redirect(url_for('login', redirectto='Notes'))
 
     if 'notes' not in session:
         session['notes'] = dict()
@@ -131,23 +130,32 @@ def Notes():
 
     if request.method == 'POST':
         if request.form['action'] == 'add':
-            if len(session['notes']) >= __max_notes:
-                flash("No more notes allowed!")
-            else:
-                note = {'subject': request.form['subject'], 'content': request.form['content']}
-                session['notes'][str(uuid())] = note
-                flash("Note was added")
+            __process_add_form()
 
         if request.form['action'] == 'delete':
-            nid = request.form['id']
-            if nid in session['notes']:
-                subject = session['notes'][nid]['subject']
-                del session['notes'][nid]
-                flash("Note '%s' deleted" % (subject))
-            else:
-                flash("Note with id '%s' doesn\'t exists" % nid)
+            __process_delete_form()
 
-    return render_template("notes.html", notes = session['notes'])
+    return render_template("notes.html", notes=session['notes'])
+
+
+def __process_delete_form():
+    nid = request.form['id']
+
+    if nid in session['notes']:
+        subject = session['notes'][nid]['subject']
+        del session['notes'][nid]
+        flash("Note '%s' deleted" % (subject))
+    else:
+        flash("Note with id '%s' doesn\'t exists" % nid)
+
+
+def __process_add_form():
+    if len(session['notes']) >= __max_notes:
+        flash("No more notes allowed!")
+    else:
+        note = {'subject': request.form['subject'], 'content': request.form['content']}
+        session['notes'][str(uuid())] = note
+        flash("Note was added")
 
 
 def __is_login_session():
@@ -167,6 +175,5 @@ def __create_new_csrf_token():
     session['csrftoken'] = "".join([choice(string.ascii_letters) for i in range(32)])
 
 
-
 if __name__ == '__main__':
-    app.run(port = 4711, debug = False)
+    app.run(port=4711, debug=False)
