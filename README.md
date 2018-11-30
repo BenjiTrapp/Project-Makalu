@@ -23,7 +23,7 @@ steht in diesem Penetrationtests NICHT im Fokus, kann aber je nach gewählter Fu
 1. mittels Docker
      ```
      1. ``$ docker pull nyctophobia/project-makalu``
-     2. ``$ docker run -d -p 4711:4711 project-makalu``
+     2. ``$ docker run -d -p 4711:4711 nyctophobia/project-makalu``
      3. Öffne im Browser: "http://localhost:4711"
      ```
 2. mittels Docker Compose
