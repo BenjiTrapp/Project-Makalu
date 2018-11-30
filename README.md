@@ -19,12 +19,26 @@ steht in diesem Penetrationtests NICHT im Fokus, kann aber je nach gewählter Fu
  nachzukommen muss zunächst die Applikation installiert und betriebsbereit gemacht werden. Hierbei hilft 
  sicherlich folgende Anleitung weiter:
  
-##### Installation & starten der WebApp mittels Docker
-```
-1. Git repository pullen von GitHub
-2. 'compose up'
-3. Öffne im Browser: "http://localhost:4711"
-```
+## Installation & starten der WebApp
+1. mittels Docker
+     ```
+     1. ``$ docker pull nyctophobia/project-makalu``
+     2. ``$ docker run -d -p 4711:4711 project-makalu``
+     3. Öffne im Browser: "http://localhost:4711"
+     ```
+2. mittels Docker Compose
+     ```
+     1. Git repository pullen von GitHub (git pull https://github.com/BenjiTrapp/Project-Makalu.git)
+     2. In das Verzeichnis Wechseln
+     3. ``docker-compose up``
+     4. Öffne im Browser: "http://localhost:4711"
+     ```
+3. Lokal in der IDE
+     ```
+     1. Die Datei https://github.com/BenjiTrapp/Project-Makalu/blob/master/ProjectMakaluApp.py editieren: 
+            Host in der Main Methode von 0.0.0.0 auf 127.0.0.1 abändern
+     2. Editierte Main-Methode starten in der IDE z.B. PyCharm
+     ```
 
 #####  [Credentials](https://www.heise.de/security/meldung/hallo-ist-meistgenutztes-deutsches-Passwort-auf-Platz-zehn-steht-ficken-3579567.html): user/hallo
 
