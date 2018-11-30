@@ -1,9 +1,12 @@
+@import url(http://fonts.googleapis.com/css?family=Amatic+SC:700);
+
 body {
     background-color: #708090;
     color: #222222;
 }
 
 .logo {
+    font-family: 'Amatic SC', cursive;
     float: left;
     font-weight: bold;
     font-size: 20px;
