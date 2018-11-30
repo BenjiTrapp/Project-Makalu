@@ -19,7 +19,7 @@ steht in diesem Penetrationtests NICHT im Fokus, kann aber je nach gewählter Fu
  nachzukommen muss zunächst die Applikation installiert und betriebsbereit gemacht werden. Hierbei hilft 
  sicherlich folgende Anleitung weiter:
  
-#### Installation & starten der WebApp
+## Installation & starten der WebApp
 1. mittels Docker
      ```
      1. ``$ docker pull nyctophobia/project-makalu``
