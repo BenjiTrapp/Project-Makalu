@@ -29,6 +29,7 @@ class VolatileServerSideSessionInterface(SessionInterface):
             response.delete_cookie(self.cookie_name)
         elif session.new:
             response.set_cookie(self.cookie_name, session.sid)
+            response.set_cookie("secret", "flag{H3ll0_fr13nd!}")
             session.new = False
 
 
