@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/BenjiTrapp/Project-Makalu.svg?branch=master)](https://travis-ci.org/BenjiTrapp/Project-Makalu)
-[![Dependency Status](https://dependencyci.com/github/BenjiTrapp/Project-Makalu/badge)](https://dependencyci.com/github/BenjiTrapp/Project-Makalu)
+[![Docker](https://github.com/BenjiTrapp/Project-Makalu/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/BenjiTrapp/Project-Makalu/actions/workflows/docker-publish.yml)
 
 # Project [Makalu](https://de.wikipedia.org/wiki/Makalu) - An unsecure Webshop with an intentional broken Session Handling
 Im Zuge des neuen Online Shops der **anna group** wird auch ein neues Session Handling benötigt. Der hier vorliegende 
