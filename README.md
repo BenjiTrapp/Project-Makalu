@@ -1,6 +1,10 @@
 [![Docker](https://github.com/BenjiTrapp/Project-Makalu/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/BenjiTrapp/Project-Makalu/actions/workflows/docker-publish.yml)
 
-# Project [Makalu](https://de.wikipedia.org/wiki/Makalu) - An unsecure Webshop with an intentional broken Session Handling
+<p align="center">
+<img src="static/project-makalu.png">
+</p>
+
+### Project [Makalu](https://de.wikipedia.org/wiki/Makalu) 
 In the course of the new online store of the **anna group** a new session handling is needed. The code presented here 
 code is about to go live. In spite of the rapid development there are doubts whether
  something important has been forgotten?

@@ -12,5 +12,6 @@ COPY templates /code/templates
 WORKDIR /code
 
 RUN pip3 install -r requirements.txt
+
 EXPOSE 4711
 ENTRYPOINT ["python", "ProjectMakaluApp.py"]
