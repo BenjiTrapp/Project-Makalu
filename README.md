@@ -24,20 +24,20 @@ is NOT the focus of this penetration test, but can become a "problem" for the at
  
 ## Install & launch the WebApp
 1. using Docker
-     ```
-     1. ``$ docker pull nyctophobia/project-makalu``
-     2. ``$ docker run -d -p 4711:4711 nyctophobia/project-makalu``
-     3. open in browser: "http://localhost:4711"
+     ```bash
+     $ docker pull ghcr.io/benjitrapp/project-makalu:main
+     $ docker run -d -p 4711:4711 benjitrapp/project-makalu
+     => open in browser: "http://localhost:4711"
      ```
 2. Using Docker Compose
-     ```
+     ```bash
      1. pull Git repository from GitHub (git pull https://github.com/BenjiTrapp/Project-Makalu.git)
      2. change to the directory
-     3. ``docker-compose up``
+     3. $ docker-compose up
      4. open in browser: ``http://localhost:4711``
      ```
 3. locally in the IDE
-     ```
+     ```bash
      1. edit the file https://github.com/BenjiTrapp/Project-Makalu/blob/master/ProjectMakaluApp.py: 
             Change host in main method from 0.0.0.0 to 127.0.0.1. 2.
      2. start edited main method in IDE e.g. PyCharm
